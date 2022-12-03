@@ -16,6 +16,11 @@ export interface QuotesList {
   totalCount: number;
   totalPages: number;
 }
+export interface Age {
+  age: number;
+  count: number;
+  name: string;
+}
 
 export interface err {
   error: boolean;

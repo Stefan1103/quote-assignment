@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { FC, useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useAxios } from "../hooks/useAxios";
-import { Quote } from "../models";
-const RandomQuote = () => {
-  const { isLoading, isError, dataSingleQuote, getRandomQuote } = useAxios();
+import Error from "./Error";
+import Loading from "../components/Loading";
 
-  const [randomQuote, setRandomQuote] = useState<Quote>();
+const RandomQuote: FC = () => {
+  const { isLoading, isError, dataRandomQuote, getRandomQuote } = useAxios();
 
   const [sendRequest, setSendRequest] = useState<boolean>(false);
   const nav = useNavigate();
@@ -15,22 +15,20 @@ const RandomQuote = () => {
   }, []);
 
   useEffect(() => {
-    setRandomQuote(dataSingleQuote);
-  }, [dataSingleQuote]);
-
-  useEffect(() => {
     if (sendRequest) {
       setSendRequest(false);
       getRandomQuote();
-      setRandomQuote(dataSingleQuote);
     }
-  }, [sendRequest, dataSingleQuote, getRandomQuote]);
+  }, [sendRequest, getRandomQuote]);
+
+  if (isLoading) return <Loading />;
+  if (isError.error) return <Error />;
 
   return (
     <div className="random-quote-main">
       <div className="random-quote-content">
-        <h3 className="mb bt">{randomQuote?.author}</h3>
-        <p className="mr ml">{randomQuote?.content}</p>
+        <h3 className="mb bt">{dataRandomQuote?.author}</h3>
+        <p className="mr ml">{dataRandomQuote?.content}</p>
       </div>
       <div className="btn-container-rq mt">
         <button
