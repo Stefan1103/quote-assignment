@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
-import { QuotesList, err, Quote, Age } from "../models";
+import { QuotesList, err, RandomQuote, Age } from "../models";
 
 export const useAxios = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -10,19 +10,19 @@ export const useAxios = () => {
     statusText: "",
   });
 
-  const urlRandom = "https://api.quotable.io/random";
-  const url = "https://api.quotable.io/quotes";
+  const urlRandom = "http://localhost:5000/random";
+  const url = "http://localhost:5000/quotes";
   const [dataQuotes, setDataQuotes] = useState<QuotesList>();
-  const [dataRandomQuote, setDataRandomQuote] = useState<Quote>();
+  const [dataRandomQuote, setDataRandomQuote] = useState<RandomQuote>();
 
   const [listAges, setListAges] = useState<Age[]>([]);
   const newArrAges: Age[] = [];
 
-  const getRandomQuote = async () => {
+  const getRandomQuote = async (): Promise<void> => {
     try {
       setIsLoading(true);
       const response = await axios.get(urlRandom);
-      const result: Quote = await response.data;
+      const result: RandomQuote = await response.data;
       setDataRandomQuote(result);
       setIsLoading(false);
     } catch (error) {
@@ -30,7 +30,7 @@ export const useAxios = () => {
       setIsError({ error: true, status: "", statusText: "ERROR..." });
     }
   };
-  const getQuotesData = async () => {
+  const getQuotesData = async (): Promise<void> => {
     try {
       setIsLoading(true);
       const responseList = await axios.get(url);

@@ -27,8 +27,8 @@ const RandomQuote: FC = () => {
   return (
     <div className="random-quote-main">
       <div className="random-quote-content">
-        <h3 className="mb bt">{dataRandomQuote?.author}</h3>
-        <p className="mr ml">{dataRandomQuote?.content}</p>
+        <h3 className="mb bt">{dataRandomQuote?.results[0].author}</h3>
+        <p className="mr ml">{dataRandomQuote?.results[0].content}</p>
       </div>
       <div className="btn-container-rq mt">
         <button

@@ -27,3 +27,7 @@ export interface err {
   status: null | string | number;
   statusText: string;
 }
+
+export interface RandomQuote {
+  results: Quote[];
+}
